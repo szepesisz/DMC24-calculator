@@ -5,8 +5,25 @@ requires = ["setuptools"]
 name = "calcualor"
 version = "0.1.0"
 dynamic = [
-    "dependencies"
+    "dependencies",
+    "optional-dependencies"
 ]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
+optional-dependencies.test = { file = ["requirements_test.txt"] }
+
+[tool.pytest.ini_options]
+minversion = "7.3"
+log_level = "NOTSET"
+addopts = '''
+    -v
+    -r=a
+    --capture=sys
+    --color=yes
+    --junitxml testresults/testresults.xml
+    --html testresults/testresults.html
+    --cov=calculator
+    --cov-report xml:testresults/coverage.xml
+    --cov-report html:testresults/htmlcov
+    '''
